@@ -1,4 +1,4 @@
-package br.com.banhoetosa.gihpet.enums;
+package br.com.banhoetosa.gihpet.enums.pet;
 
 public enum RacaDoAnimal {
     LABRADOR_RETRIEVER,

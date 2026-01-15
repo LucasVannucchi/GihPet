@@ -1,6 +1,7 @@
 package br.com.banhoetosa.gihpet.dto.cliente;
 
 import br.com.banhoetosa.gihpet.dto.endereco.EnderecoRequest;
+import br.com.banhoetosa.gihpet.enums.StatusCliente;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
@@ -29,6 +30,8 @@ public record ClienteRequest(
         @NotBlank(message = "Campo obrigatório!")
         @Size(min = 2, max = 50, message = "Campo fora do padrão!")
         String nacionalidade,
+
+        StatusCliente statusCliente,
 
         @NotBlank(message = "Campo obrigatório!")
         @Pattern(

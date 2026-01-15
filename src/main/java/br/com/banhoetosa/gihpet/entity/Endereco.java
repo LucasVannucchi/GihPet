@@ -14,12 +14,10 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 public class Endereco {
 
-    // ========== Identificação ==========
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    // ========== Dados do endereço ==========
     @Column(nullable = false, length = 100)
     private String logradouro;
 
@@ -41,27 +39,24 @@ public class Endereco {
     @Column(length = 10, nullable = false)
     private String cep;
 
-    // ========== Relacionamentos ==========
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    // ========== Auditoria ==========
     @CreatedDate
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Column(name = "data_cadastro", updatable = false)
+    @Column(name = "data_cadastro", nullable = false, updatable = false)
     private LocalDateTime dataCadastro;
 
     @LastModifiedDate
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Column(name = "data_atualizacao")
+    @Column(name = "data_atualizacao", nullable = false)
     private LocalDateTime dataAtualizacao;
 
-    // ========== Construtores ==========
     public Endereco() {}
 
     public Endereco(String logradouro, String numero, String complemento,
@@ -75,41 +70,31 @@ public class Endereco {
         this.cep = cep;
     }
 
-    // ========== Getters e Setters ==========
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
-
     public String getLogradouro() { return logradouro; }
     public void setLogradouro(String logradouro) { this.logradouro = logradouro; }
-
     public String getNumero() { return numero; }
     public void setNumero(String numero) { this.numero = numero; }
-
     public String getComplemento() { return complemento; }
     public void setComplemento(String complemento) { this.complemento = complemento; }
-
     public String getBairro() { return bairro; }
     public void setBairro(String bairro) { this.bairro = bairro; }
-
     public String getCidade() { return cidade; }
     public void setCidade(String cidade) { this.cidade = cidade; }
-
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
-
     public String getCep() { return cep; }
     public void setCep(String cep) { this.cep = cep; }
-
     public Cliente getCliente() { return cliente; }
     public void setCliente(Cliente cliente) { this.cliente = cliente; }
-
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
     public LocalDateTime getDataCadastro() { return dataCadastro; }
     public void setDataCadastro(LocalDateTime dataCadastro) { this.dataCadastro = dataCadastro; }
-
     public LocalDateTime getDataAtualizacao() { return dataAtualizacao; }
     public void setDataAtualizacao(LocalDateTime dataAtualizacao) { this.dataAtualizacao = dataAtualizacao; }
 
-    // ========== Utilitários ==========
     @Override
     public String toString() {
         return "Endereco{" +

@@ -3,9 +3,9 @@
 -- ============================================
 create table tb_usuario (
     id uuid not null primary key,
-    login varchar(255),
-    senha varchar(255),
-    roles varchar[],
+    login varchar(100) not null unique,
+    senha varchar(255) not null,
+    tipo_acesso varchar(50) not null,
     data_cadastro timestamp,
     data_atualizacao timestamp
 );
@@ -20,10 +20,11 @@ create table tb_cliente (
     rg varchar(11) not null unique,
     data_nascimento date not null,
     nacionalidade varchar(50) not null,
-    telefone varchar(15) unique,
+    status_cliente varchar(20) not null,
+    telefone varchar(25) unique,
     email varchar(100) unique,
-    data_cadastro timestamp,
-    data_atualizacao timestamp,
+    data_cadastro timestamp not null,
+    data_atualizacao timestamp not null,
     id_usuario uuid,
     constraint fk_cliente_usuario foreign key (id_usuario) references tb_usuario(id)
 );
@@ -40,8 +41,12 @@ create table tb_endereco (
     cidade varchar(60) not null,
     estado varchar(2) not null,
     cep varchar(10) not null,
-    cliente_id uuid,
-    constraint fk_endereco_cliente foreign key (cliente_id) references tb_cliente(id)
+    id_cliente uuid,
+    id_usuario uuid,
+    data_cadastro timestamp not null,
+    data_atualizacao timestamp not null,
+    constraint fk_endereco_cliente foreign key (id_cliente) references tb_cliente(id),
+    constraint fk_endereco_usuario foreign key (id_usuario) references tb_usuario(id)
 );
 
 -- ============================================
@@ -49,16 +54,73 @@ create table tb_endereco (
 -- ============================================
 create table tb_pet (
     id uuid not null primary key,
-    data_cadastro timestamp,
-    data_atualizacao timestamp,
+    nome_pet varchar(100) not null,
+    tipo_animal varchar(50) not null,
+    raca_animal varchar(50) not null,
+    cor varchar(50),
+    porte_animal varchar(30),
+    peso numeric(10,2),
+    possui_alergia boolean,
+    observacoes varchar(255),
     id_cliente uuid,
-    constraint fk_pet_cliente foreign key (id_cliente) references tb_cliente(id)
+    id_usuario uuid,
+    data_cadastro timestamp not null,
+    data_atualizacao timestamp not null,
+    constraint fk_pet_cliente foreign key (id_cliente) references tb_cliente(id),
+    constraint fk_pet_usuario foreign key (id_usuario) references tb_usuario(id)
+);
+
+-- ============================================
+-- tabela: tb_agendamento
+-- ============================================
+create table tb_agendamento (
+    id uuid not null primary key,
+    data_hora timestamp not null,
+    tipo_servico varchar(50) not null,
+    status_agendamento varchar(50) not null,
+    observacoes varchar(255),
+    id_pet uuid not null,
+    id_cliente uuid not null,
+    id_usuario uuid,
+    data_criacao timestamp not null,
+    data_atualizacao timestamp not null,
+    constraint fk_agendamento_pet foreign key (id_pet) references tb_pet(id),
+    constraint fk_agendamento_cliente foreign key (id_cliente) references tb_cliente(id),
+    constraint fk_agendamento_usuario foreign key (id_usuario) references tb_usuario(id)
+);
+
+-- ============================================
+-- tabela: tb_servico
+-- ============================================
+create table tb_servico (
+    id uuid not null primary key,
+    tipo_servico varchar(30) not null,
+    preco numeric(10,2) not null,
+    tipo_pagamento varchar(30) not null,
+    status_pagamento varchar(30) not null,
+    taxi_dog boolean not null,
+    horario_taxi_dog varchar(30),
+    pacote boolean not null,
+    status_servico varchar(30) not null,
+    observacoes varchar(500),
+    id_data_agendamento uuid not null,
+    id_cliente uuid not null,
+    id_pet uuid not null,
+    id_usuario uuid not null,
+    data_cadastro timestamp not null,
+    data_atualizacao timestamp not null,
+    constraint fk_servico_agendamento foreign key (id_data_agendamento) references tb_agendamento(id),
+    constraint fk_servico_cliente foreign key (id_cliente) references tb_cliente(id),
+    constraint fk_servico_pet foreign key (id_pet) references tb_pet(id),
+    constraint fk_servico_usuario foreign key (id_usuario) references tb_usuario(id)
 );
 
 -- ============================================
 -- consultas de teste
 -- ============================================
+select * from tb_usuario;
 select * from tb_cliente;
 select * from tb_endereco;
 select * from tb_pet;
-select * from tb_usuario;
+select * from tb_agendamento;
+select * from tb_servico;

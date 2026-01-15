@@ -42,7 +42,6 @@ public class ClienteController implements GenericController {
         Cliente cliente = mapper.toEntity(dto);
         Cliente salvo = service.salvar(cliente);
 
-        // Converte a entidade salva em ClienteResponse
         ClienteResponse response = mapper.toDTO(salvo);
 
         URI location = gerarHeaderLocation(salvo.getId());

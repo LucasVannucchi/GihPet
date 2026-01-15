@@ -33,6 +33,7 @@ public class ClienteMapper {
         cliente.setNacionalidade(dto.nacionalidade());
         cliente.setTelefone(dto.telefone());
         cliente.setEmail(dto.email());
+        cliente.setStatusCliente(dto.statusCliente());
 
         List<Endereco> enderecos = dto.enderecos()
                 .stream()
@@ -62,6 +63,7 @@ public class ClienteMapper {
                 cliente.getNacionalidade(),
                 cliente.getTelefone(),
                 cliente.getEmail(),
+                cliente.getStatusCliente(),
                 enderecos
         );
     }
