@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    container_name: gihpet-app
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/gihpet
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_JPA_SHOW_SQL: true
+      SPRING_APPLICATION_NAME: gihpet
+    depends_on:
+      - db
+    networks:
+      - gihpet-net
+
+  db:
+    image: postgres:16
+    container_name: gihpet-db
+    restart: always
+    environment:
+      POSTGRES_DB: gihpet
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - gihpet_pgdata:/var/lib/postgresql/data
+    networks:
+      - gihpet-net
+
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: gihpet-pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gihpet.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "15432:80"
+    depends_on:
+      - db
+    networks:
+      - gihpet-net
+
+networks:
+  gihpet-net:
+
+volumes:
+  gihpet_pgdata:

@@ -1,0 +1,64 @@
+-- ============================================
+-- tabela: tb_usuario
+-- ============================================
+create table tb_usuario (
+    id uuid not null primary key,
+    login varchar(255),
+    senha varchar(255),
+    roles varchar[],
+    data_cadastro timestamp,
+    data_atualizacao timestamp
+);
+
+-- ============================================
+-- tabela: tb_cliente
+-- ============================================
+create table tb_cliente (
+    id uuid not null primary key,
+    nome varchar(100) not null,
+    cpf varchar(11) not null unique,
+    rg varchar(11) not null unique,
+    data_nascimento date not null,
+    nacionalidade varchar(50) not null,
+    telefone varchar(15) unique,
+    email varchar(100) unique,
+    data_cadastro timestamp,
+    data_atualizacao timestamp,
+    id_usuario uuid,
+    constraint fk_cliente_usuario foreign key (id_usuario) references tb_usuario(id)
+);
+
+-- ============================================
+-- tabela: tb_endereco
+-- ============================================
+create table tb_endereco (
+    id uuid not null primary key,
+    logradouro varchar(100) not null,
+    numero varchar(10),
+    complemento varchar(50),
+    bairro varchar(60) not null,
+    cidade varchar(60) not null,
+    estado varchar(2) not null,
+    cep varchar(10) not null,
+    cliente_id uuid,
+    constraint fk_endereco_cliente foreign key (cliente_id) references tb_cliente(id)
+);
+
+-- ============================================
+-- tabela: tb_pet
+-- ============================================
+create table tb_pet (
+    id uuid not null primary key,
+    data_cadastro timestamp,
+    data_atualizacao timestamp,
+    id_cliente uuid,
+    constraint fk_pet_cliente foreign key (id_cliente) references tb_cliente(id)
+);
+
+-- ============================================
+-- consultas de teste
+-- ============================================
+select * from tb_cliente;
+select * from tb_endereco;
+select * from tb_pet;
+select * from tb_usuario;
