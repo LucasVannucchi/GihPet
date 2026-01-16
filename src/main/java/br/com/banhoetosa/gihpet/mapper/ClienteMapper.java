@@ -53,6 +53,7 @@ public class ClienteMapper {
         cliente.setNacionalidade(dto.nacionalidade());
         cliente.setTelefone(dto.telefone());
         cliente.setEmail(dto.email());
+        cliente.setStatusCliente(dto.statusCliente());
         return cliente;
     }
 

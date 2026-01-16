@@ -20,16 +20,16 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("v1/api/clientes")
 @Tag(name = "Clientes")
 public class ClienteController implements GenericController {
 
-    private final ClienteService service;
-    private final ClienteMapper mapper;
+    private final ClienteService clienteService;
+    private final ClienteMapper clienteMapper;
 
-    public ClienteController(ClienteService service, ClienteMapper mapper) {
-        this.service = service;
-        this.mapper = mapper;
+    public ClienteController(ClienteService clienteService, ClienteMapper clienteMapper) {
+        this.clienteService = clienteService;
+        this.clienteMapper = clienteMapper;
     }
 
     @PostMapping
@@ -40,10 +40,10 @@ public class ClienteController implements GenericController {
             @ApiResponse(responseCode = "409", description = "Cliente já cadastrado!")
     })
     public ResponseEntity<ClienteResponse> salvar(@RequestBody @Valid ClienteRequest dto) {
-        Cliente cliente = mapper.toEntity(dto);
-        Cliente salvo = service.salvar(cliente);
+        Cliente cliente = clienteMapper.toEntity(dto);
+        Cliente salvo = clienteService.salvar(cliente);
 
-        ClienteResponse response = mapper.toDTO(salvo);
+        ClienteResponse response = clienteMapper.toDTO(salvo);
 
         URI location = gerarHeaderLocation(salvo.getId());
         return ResponseEntity.created(location).body(response);
@@ -53,12 +53,12 @@ public class ClienteController implements GenericController {
     @Operation(summary = "Buscar cliente por ID")
     public ResponseEntity<ClienteResponse> buscarPorId(@PathVariable("id") String id) {
         var idCliente = UUID.fromString(id);
-        Optional<Cliente> clienteOptional = service.buscarPorId(idCliente);
+        Optional<Cliente> clienteOptional = clienteService.buscarPorId(idCliente);
 
-        return service
+        return clienteService
                 .buscarPorId(idCliente)
                 .map(cliente -> {
-                    ClienteResponse dto = mapper.toDTO(cliente);
+                    ClienteResponse dto = clienteMapper.toDTO(cliente);
                     return ResponseEntity.ok(dto);
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -81,10 +81,10 @@ public class ClienteController implements GenericController {
             @RequestParam(value = "tamanhoPagina", defaultValue = "10")
             Integer tamanhoPagina
     ) {
-        Page<Cliente> paginaResultado = service.buscar(
+        Page<Cliente> paginaResultado = clienteService.buscar(
                 nome, logradouro, bairro, cidade, nomePet, pagina, tamanhoPagina);
 
-        Page<ClienteResponse> resultado = paginaResultado.map(mapper::toDTO);
+        Page<ClienteResponse> resultado = paginaResultado.map(clienteMapper::toDTO);
 
         return ResponseEntity.ok(resultado);
     }
@@ -96,17 +96,17 @@ public class ClienteController implements GenericController {
             @RequestBody @Valid ClienteAtualizacaoRequest dto) {
 
         UUID idCliente = UUID.fromString(id);
-        Optional<Cliente> clienteOptional = service.buscarPorId(idCliente);
+        Optional<Cliente> clienteOptional = clienteService.buscarPorId(idCliente);
 
         if (clienteOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        Cliente cliente = mapper.toEntity(dto);
+        Cliente cliente = clienteMapper.toEntity(dto);
         cliente.setId(idCliente);
 
-        Cliente clienteAtualizado = service.atualizarCliente(cliente);
-        ClienteResponse response = mapper.toDTO(clienteAtualizado);
+        Cliente clienteAtualizado = clienteService.atualizarCliente(cliente);
+        ClienteResponse response = clienteMapper.toDTO(clienteAtualizado);
 
         return ResponseEntity.ok(response);
     }
@@ -115,13 +115,13 @@ public class ClienteController implements GenericController {
     @Operation(summary = "Excluir cliente")
     public  ResponseEntity<Void> excluirCliente(@PathVariable("id") String id){
         var idCliente = UUID.fromString(id);
-        Optional<Cliente> clienteOptional = service.buscarPorId(idCliente);
+        Optional<Cliente> clienteOptional = clienteService.buscarPorId(idCliente);
 
         if (clienteOptional.isEmpty()){
             return ResponseEntity.notFound().build();
         }
 
-        service.deletarCliente(idCliente);
+        clienteService.deletarCliente(idCliente);
         return ResponseEntity.noContent().build();
     }
 }

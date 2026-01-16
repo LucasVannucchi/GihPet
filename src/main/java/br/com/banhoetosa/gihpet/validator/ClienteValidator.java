@@ -11,10 +11,10 @@ import java.util.Optional;
 @Component
 public class ClienteValidator {
 
-    private final ClienteRepository repository;
+    private final ClienteRepository clienteRepository;
 
-    public ClienteValidator(ClienteRepository repository) {
-        this.repository = repository;
+    public ClienteValidator(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
     }
 
     public void validarNovoCliente(Cliente cliente) {
@@ -49,7 +49,7 @@ public class ClienteValidator {
 
     private boolean existeClienteCadastrado(Cliente cliente) {
         Optional<Cliente> clienteEncontrado =
-                repository.findByNomeAndRgAndCpf(cliente.getNome(), cliente.getRg(), cliente.getCpf());
+                clienteRepository.findByNomeAndRgAndCpf(cliente.getNome(), cliente.getRg(), cliente.getCpf());
         if (cliente.getId() == null) {
             return clienteEncontrado.isPresent();
         }

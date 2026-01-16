@@ -1,5 +1,6 @@
 package br.com.banhoetosa.gihpet.mapper;
 
+import br.com.banhoetosa.gihpet.dto.endereco.EnderecoAtualizacaoRequest;
 import br.com.banhoetosa.gihpet.dto.endereco.EnderecoRequest;
 import br.com.banhoetosa.gihpet.dto.endereco.EnderecoResponse;
 import br.com.banhoetosa.gihpet.entity.Endereco;
@@ -22,6 +23,18 @@ public class EnderecoMapper {
         endereco.setEstado(dto.estado());
         endereco.setCep(dto.cep());
 
+        return endereco;
+    }
+
+    public Endereco toEntity(EnderecoAtualizacaoRequest dto){
+        Endereco endereco = new Endereco();
+        endereco.setLogradouro(dto.logradouro());
+        endereco.setNumero(dto.numero());
+        endereco.setComplemento(dto.complemento());
+        endereco.setBairro(dto.bairro());
+        endereco.setCidade(dto.cidade());
+        endereco.setEstado(dto.estado());
+        endereco.setCep(dto.cep());
         return endereco;
     }
 

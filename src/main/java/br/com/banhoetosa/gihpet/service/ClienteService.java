@@ -6,7 +6,6 @@ import br.com.banhoetosa.gihpet.entity.Usuario;
 import br.com.banhoetosa.gihpet.enums.StatusCliente;
 import br.com.banhoetosa.gihpet.repository.ClienteRepository;
 import br.com.banhoetosa.gihpet.repository.EnderecoRepository;
-import br.com.banhoetosa.gihpet.repository.PetRepository;
 import br.com.banhoetosa.gihpet.security.SecurityService;
 import br.com.banhoetosa.gihpet.validator.ClienteValidator;
 import org.springframework.data.domain.Page;
@@ -16,7 +15,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,27 +25,24 @@ public class ClienteService {
 
     private final ClienteRepository clienteRepository;
     private final EnderecoRepository enderecoRepository;
-    private final PetRepository petRepository;
-    private final ClienteValidator validator;
+    private final ClienteValidator clienteValidator;
     private final SecurityService securityService;
 
     public ClienteService(
             ClienteRepository clienteRepository,
             EnderecoRepository enderecoRepository,
-            PetRepository petRepository,
-            ClienteValidator validator,
+            ClienteValidator clienteValidator,
             SecurityService securityService
     ) {
         this.clienteRepository = clienteRepository;
         this.enderecoRepository = enderecoRepository;
-        this.petRepository = petRepository;
-        this.validator = validator;
+        this.clienteValidator = clienteValidator;
         this.securityService = securityService;
     }
 
     @Transactional
     public Cliente salvar(Cliente cliente) {
-        validator.validarNovoCliente(cliente);
+        clienteValidator.validarNovoCliente(cliente);
         Usuario usuario = securityService.obterUsuarioLogado();
         cliente.setUsuario(usuario);
 
@@ -106,15 +101,22 @@ public class ClienteService {
         Cliente clienteExistente = clienteRepository.findById(cliente.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado!"));
 
-        if (cliente.getNome() != null) clienteExistente.setNome(cliente.getNome());
-        if (cliente.getCpf() != null) clienteExistente.setCpf(cliente.getCpf());
-        if (cliente.getRg() != null) clienteExistente.setRg(cliente.getRg());
-        if (cliente.getTelefone() != null) clienteExistente.setTelefone(cliente.getTelefone());
-        if (cliente.getEmail() != null) clienteExistente.setEmail(cliente.getEmail());
-        if (cliente.getStatusCliente() != null) clienteExistente.setStatusCliente(cliente.getStatusCliente());
-        if (cliente.getDataNascimento() != null) clienteExistente.setDataNascimento(cliente.getDataNascimento());
+        if (cliente.getNome() != null)
+            clienteExistente.setNome(cliente.getNome());
+        if (cliente.getCpf() != null)
+            clienteExistente.setCpf(cliente.getCpf());
+        if (cliente.getRg() != null)
+            clienteExistente.setRg(cliente.getRg());
+        if (cliente.getTelefone() != null)
+            clienteExistente.setTelefone(cliente.getTelefone());
+        if (cliente.getEmail() != null)
+            clienteExistente.setEmail(cliente.getEmail());
+        if (cliente.getStatusCliente() != null)
+            clienteExistente.setStatusCliente(cliente.getStatusCliente());
+        if (cliente.getDataNascimento() != null)
+            clienteExistente.setDataNascimento(cliente.getDataNascimento());
 
-        validator.validarAtualizacao(clienteExistente);
+        clienteValidator.validarAtualizacao(clienteExistente);
 
         return clienteRepository.save(clienteExistente);
     }

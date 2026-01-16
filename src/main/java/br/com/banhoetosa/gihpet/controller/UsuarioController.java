@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("usuarios")
+@RequestMapping("v1/api/usuarios")
 @Tag(name = "Usuario")
 public class UsuarioController {
 
