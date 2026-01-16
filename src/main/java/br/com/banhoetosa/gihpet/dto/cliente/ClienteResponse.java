@@ -5,6 +5,7 @@ import br.com.banhoetosa.gihpet.enums.StatusCliente;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,5 +20,9 @@ public record ClienteResponse(
         String telefone,
         String email,
         StatusCliente statusCliente,
+        @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
+        LocalDateTime dataCadastro,
+        @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
+        LocalDateTime dataAtualizacao,
         List<EnderecoResponse> enderecos
 ) {}

@@ -1,5 +1,6 @@
 package br.com.banhoetosa.gihpet.mapper;
 
+import br.com.banhoetosa.gihpet.dto.cliente.ClienteAtualizacaoRequest;
 import br.com.banhoetosa.gihpet.dto.cliente.ClienteRequest;
 import br.com.banhoetosa.gihpet.dto.cliente.ClienteResponse;
 import br.com.banhoetosa.gihpet.dto.endereco.EnderecoRequest;
@@ -33,7 +34,6 @@ public class ClienteMapper {
         cliente.setNacionalidade(dto.nacionalidade());
         cliente.setTelefone(dto.telefone());
         cliente.setEmail(dto.email());
-        cliente.setStatusCliente(dto.statusCliente());
 
         List<Endereco> enderecos = dto.enderecos()
                 .stream()
@@ -43,6 +43,19 @@ public class ClienteMapper {
 
         return cliente;
     }
+
+    public Cliente toEntity(ClienteAtualizacaoRequest dto) {
+        Cliente cliente = new Cliente();
+        cliente.setNome(dto.nome());
+        cliente.setCpf(dto.cpf());
+        cliente.setRg(dto.rg());
+        cliente.setDataNascimento(dto.dataNascimento());
+        cliente.setNacionalidade(dto.nacionalidade());
+        cliente.setTelefone(dto.telefone());
+        cliente.setEmail(dto.email());
+        return cliente;
+    }
+
 
     public ClienteResponse toDTO(Cliente cliente) {
         if (cliente == null) {
@@ -64,6 +77,8 @@ public class ClienteMapper {
                 cliente.getTelefone(),
                 cliente.getEmail(),
                 cliente.getStatusCliente(),
+                cliente.getDataCadastro(),
+                cliente.getDataAtualizacao(),
                 enderecos
         );
     }

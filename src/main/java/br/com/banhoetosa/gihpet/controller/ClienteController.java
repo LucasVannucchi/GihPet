@@ -1,5 +1,6 @@
 package br.com.banhoetosa.gihpet.controller;
 
+import br.com.banhoetosa.gihpet.dto.cliente.ClienteAtualizacaoRequest;
 import br.com.banhoetosa.gihpet.dto.cliente.ClienteRequest;
 import br.com.banhoetosa.gihpet.dto.cliente.ClienteResponse;
 import br.com.banhoetosa.gihpet.entity.Cliente;
@@ -86,5 +87,41 @@ public class ClienteController implements GenericController {
         Page<ClienteResponse> resultado = paginaResultado.map(mapper::toDTO);
 
         return ResponseEntity.ok(resultado);
+    }
+
+    @PatchMapping("{id}")
+    @Operation(summary = "Atualiza cliente")
+    public ResponseEntity<ClienteResponse> atualizarCliente(
+            @PathVariable("id") String id,
+            @RequestBody @Valid ClienteAtualizacaoRequest dto) {
+
+        UUID idCliente = UUID.fromString(id);
+        Optional<Cliente> clienteOptional = service.buscarPorId(idCliente);
+
+        if (clienteOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Cliente cliente = mapper.toEntity(dto);
+        cliente.setId(idCliente);
+
+        Cliente clienteAtualizado = service.atualizarCliente(cliente);
+        ClienteResponse response = mapper.toDTO(clienteAtualizado);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("{id}")
+    @Operation(summary = "Excluir cliente")
+    public  ResponseEntity<Void> excluirCliente(@PathVariable("id") String id){
+        var idCliente = UUID.fromString(id);
+        Optional<Cliente> clienteOptional = service.buscarPorId(idCliente);
+
+        if (clienteOptional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        service.deletarCliente(idCliente);
+        return ResponseEntity.noContent().build();
     }
 }

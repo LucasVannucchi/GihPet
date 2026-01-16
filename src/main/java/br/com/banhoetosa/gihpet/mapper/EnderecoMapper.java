@@ -38,9 +38,7 @@ public class EnderecoMapper {
                 entity.getBairro(),
                 entity.getCidade(),
                 entity.getEstado(),
-                entity.getCep(),
-                entity.getDataCadastro(),
-                entity.getDataAtualizacao()
+                entity.getCep()
         );
     }
 }

@@ -61,12 +61,12 @@ public class Cliente {
 
     @CreatedDate
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Column(name = "data_cadastro", nullable = false, updatable = false)
+    @Column(name = "data_cadastro", nullable = false)
     private LocalDateTime dataCadastro;
 
     @LastModifiedDate
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Column(name = "data_atualizacao", nullable = false)
+    @Column(name = "data_atualizacao")
     private LocalDateTime dataAtualizacao;
 
     public Cliente() {}

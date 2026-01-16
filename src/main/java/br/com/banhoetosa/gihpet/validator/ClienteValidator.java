@@ -17,7 +17,7 @@ public class ClienteValidator {
         this.repository = repository;
     }
 
-    public void validar(Cliente cliente) {
+    public void validarNovoCliente(Cliente cliente) {
         if (cliente == null) {
             throw new IllegalArgumentException("Cliente não pode ser nulo!");
         }
@@ -29,33 +29,32 @@ public class ClienteValidator {
         }
     }
 
-    public void aplicarValoresPadrao(Cliente cliente) {
+    public void validarAtualizacao(Cliente cliente) {
         if (cliente == null) {
             throw new IllegalArgumentException("Cliente não pode ser nulo!");
         }
+        if (cliente.getId() == null) {
+            throw new IllegalArgumentException("ID do cliente é obrigatório para atualização!");
+        }
+        if (existeClienteCadastrado(cliente)) {
+            throw new RegistroDuplicadoException("Outro cliente já possui estes dados!");
+        }
+    }
 
+    private void aplicarValoresPadrao(Cliente cliente) {
         if (cliente.getStatusCliente() == null) {
             cliente.setStatusCliente(StatusCliente.ATIVO);
         }
     }
 
-
-    public boolean existeClienteCadastrado(Cliente cliente){
-        Optional<Cliente> clienteEncontrado = repository.findByNomeAndRgAndCpf(cliente.getNome(), cliente.getRg(), cliente.getCpf());
-
-        /**
-         * Se estou cadastrando um novo cliente (id == null)
-         */
-        if (cliente.getId() == null){
+    private boolean existeClienteCadastrado(Cliente cliente) {
+        Optional<Cliente> clienteEncontrado =
+                repository.findByNomeAndRgAndCpf(cliente.getNome(), cliente.getRg(), cliente.getCpf());
+        if (cliente.getId() == null) {
             return clienteEncontrado.isPresent();
         }
 
-        /**
-         *  Valida se é o Cliente referente ao ID que estou querendo atualizar
-         */
-        if (clienteEncontrado.isPresent()){
-            return !cliente.getId().equals(clienteEncontrado.get().getId()) && clienteEncontrado.isPresent();
-        }
-        return false;
+        return clienteEncontrado.isPresent()
+                && !cliente.getId().equals(clienteEncontrado.get().getId());
     }
 }

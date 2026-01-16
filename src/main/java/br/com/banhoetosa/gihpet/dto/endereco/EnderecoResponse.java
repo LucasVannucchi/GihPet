@@ -13,9 +13,5 @@ public record EnderecoResponse(
         String bairro,
         String cidade,
         String estado,
-        String cep,
-        @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
-        LocalDateTime dataCadastro,
-        @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
-        LocalDateTime dataAtualizacao
+        String cep
 ) {}
