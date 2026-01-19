@@ -38,20 +38,20 @@ public class EnderecoMapper {
         return endereco;
     }
 
-    public EnderecoResponse toDTO(Endereco entity) {
-        if (entity == null) {
+    public EnderecoResponse toDTO(Endereco endereco) {
+        if (endereco == null) {
             return null;
         }
 
         return new EnderecoResponse(
-                entity.getId(),
-                entity.getLogradouro(),
-                entity.getNumero(),
-                entity.getComplemento(),
-                entity.getBairro(),
-                entity.getCidade(),
-                entity.getEstado(),
-                entity.getCep()
+                endereco.getId(),
+                endereco.getLogradouro(),
+                endereco.getNumero(),
+                endereco.getComplemento(),
+                endereco.getBairro(),
+                endereco.getCidade(),
+                endereco.getEstado(),
+                endereco.getCep()
         );
     }
 }

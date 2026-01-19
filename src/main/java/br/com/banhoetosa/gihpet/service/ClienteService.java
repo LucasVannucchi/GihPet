@@ -130,4 +130,19 @@ public class ClienteService {
 
         clienteRepository.save(cliente);
     }
+
+    @Transactional
+    public void removerEnderecoDoCliente(UUID idCliente, UUID idEndereco) {
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado!"));
+
+        Endereco endereco = enderecoRepository.findById(idEndereco)
+                .orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado!"));
+
+        cliente.getEnderecos().remove(endereco);
+
+        endereco.setCliente(null);
+
+        clienteRepository.save(cliente);
+    }
 }

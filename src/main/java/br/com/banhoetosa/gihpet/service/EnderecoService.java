@@ -40,6 +40,10 @@ public class EnderecoService {
         return enderecoRepository.save(endereco);
     }
 
+    public Optional<Endereco> buscarPorId(UUID id){
+        return enderecoRepository.findById(id);
+    }
+
     @Transactional
     public Endereco atualizarEndereco(Endereco endereco) {
         if (endereco.getId() == null) {
@@ -55,13 +59,13 @@ public class EnderecoService {
             enderecoExistente.setNumero(endereco.getNumero());
         if (endereco.getComplemento() != null)
             enderecoExistente.setComplemento(endereco.getComplemento());
-        if (enderecoExistente.getBairro() != null)
+        if (endereco.getBairro() != null)
             enderecoExistente.setBairro(endereco.getBairro());
-        if (enderecoExistente.getCidade() != null)
+        if (endereco.getCidade() != null)
             enderecoExistente.setCidade(endereco.getCidade());
-        if (enderecoExistente.getEstado() != null)
+        if (endereco.getEstado() != null)
             enderecoExistente.setEstado(endereco.getEstado());
-        if (enderecoExistente.getCep() != null)
+        if (endereco.getCep() != null)
             enderecoExistente.setCep(endereco.getCep());
 
         enderecoValidator.validarAtualizacao(enderecoExistente);

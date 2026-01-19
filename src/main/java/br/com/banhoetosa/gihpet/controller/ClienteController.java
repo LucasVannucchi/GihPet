@@ -90,7 +90,7 @@ public class ClienteController implements GenericController {
     }
 
     @PatchMapping("{id}")
-    @Operation(summary = "Atualiza cliente")
+    @Operation(summary = "Atualizar cliente")
     public ResponseEntity<ClienteResponse> atualizarCliente(
             @PathVariable("id") String id,
             @RequestBody @Valid ClienteAtualizacaoRequest dto) {
@@ -122,6 +122,16 @@ public class ClienteController implements GenericController {
         }
 
         clienteService.deletarCliente(idCliente);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{idCliente}/enderecos/{idEndereco}")
+    @Operation(summary = "Remover vínculo de endereço com o cliente")
+    public ResponseEntity<Void> excluirEnderecoVinculado(
+            @PathVariable UUID idCliente,
+            @PathVariable UUID idEndereco
+    ) {
+        clienteService.removerEnderecoDoCliente(idCliente, idEndereco);
         return ResponseEntity.noContent().build();
     }
 }
