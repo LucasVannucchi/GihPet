@@ -7,7 +7,6 @@ import br.com.banhoetosa.gihpet.repository.ClienteRepository;
 import br.com.banhoetosa.gihpet.repository.EnderecoRepository;
 import br.com.banhoetosa.gihpet.security.SecurityService;
 import br.com.banhoetosa.gihpet.validator.EnderecoValidator;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

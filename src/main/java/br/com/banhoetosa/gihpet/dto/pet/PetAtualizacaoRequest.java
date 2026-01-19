@@ -1,15 +1,10 @@
 package br.com.banhoetosa.gihpet.dto.pet;
 
-import br.com.banhoetosa.gihpet.dto.servico.ServicoResponse;
 import br.com.banhoetosa.gihpet.enums.pet.PorteAnimal;
 import br.com.banhoetosa.gihpet.enums.pet.RacaDoAnimal;
 import br.com.banhoetosa.gihpet.enums.pet.TipoAnimal;
 
-import java.util.List;
-import java.util.UUID;
-
-public record PetResponse(
-        UUID id,
+public record PetAtualizacaoRequest(
         String nomePet,
         TipoAnimal tipoAnimal,
         RacaDoAnimal racaDoAnimal,

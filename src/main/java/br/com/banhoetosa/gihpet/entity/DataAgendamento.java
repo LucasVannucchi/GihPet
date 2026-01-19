@@ -1,7 +1,6 @@
 package br.com.banhoetosa.gihpet.entity;
 
 import br.com.banhoetosa.gihpet.enums.StatusAgendamento;
-import br.com.banhoetosa.gihpet.enums.servico.TipoServico;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,15 +24,8 @@ public class DataAgendamento {
     private LocalDateTime dataHora;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_servico", nullable = false, length = 50)
-    private TipoServico tipoServico;
-
-    @Enumerated(EnumType.STRING)
     @Column(name = "status_agendamento", nullable = false, length = 50)
     private StatusAgendamento status;
-
-    @Column(name = "observacoes", length = 255)
-    private String observacoes;
 
     @OneToOne(mappedBy = "dataAgendamento", fetch = FetchType.LAZY)
     private Servico servico;
@@ -62,12 +54,10 @@ public class DataAgendamento {
 
     public DataAgendamento() {}
 
-    public DataAgendamento(LocalDateTime dataHora, TipoServico tipoServico, StatusAgendamento status,
-                           String observacoes, Pet pet, Cliente cliente) {
+    public DataAgendamento(LocalDateTime dataHora, StatusAgendamento status,
+                           Pet pet, Cliente cliente) {
         this.dataHora = dataHora;
-        this.tipoServico = tipoServico;
         this.status = status;
-        this.observacoes = observacoes;
         this.pet = pet;
         this.cliente = cliente;
     }
@@ -76,12 +66,8 @@ public class DataAgendamento {
     public void setId(UUID id) { this.id = id; }
     public LocalDateTime getDataHora() { return dataHora; }
     public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
-    public TipoServico getTipoServico() { return tipoServico; }
-    public void setTipoServico(TipoServico tipoServico) { this.tipoServico = tipoServico; }
     public StatusAgendamento getStatus() { return status; }
     public void setStatus(StatusAgendamento status) { this.status = status; }
-    public String getObservacoes() { return observacoes; }
-    public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
     public Servico getServico() { return servico; }
     public void setServico(Servico servico) { this.servico = servico; }
     public Pet getPet() { return pet; }
@@ -100,9 +86,7 @@ public class DataAgendamento {
         return "DataAgendamento{" +
                 "id=" + id +
                 ", dataHora=" + dataHora +
-                ", tipoServico=" + tipoServico +
                 ", status=" + status +
-                ", observacoes='" + observacoes + '\'' +
                 ", dataCriacao=" + dataCriacao +
                 ", dataAtualizacao=" + dataAtualizacao +
                 '}';

@@ -56,7 +56,7 @@ public class Servico {
     @Column(name = "observacoes", length = 500)
     private String observacoes;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_data_agendamento", nullable = false)
     private DataAgendamento dataAgendamento;
 
@@ -103,38 +103,133 @@ public class Servico {
         this.usuario = usuario;
     }
 
-    public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
-    public TipoServico getTipoServico() { return tipoServico; }
-    public void setTipoServico(TipoServico tipoServico) { this.tipoServico = tipoServico; }
-    public BigDecimal getPreco() { return preco; }
-    public void setPreco(BigDecimal preco) { this.preco = preco; }
-    public TipoPagamento getTipoPagamento() { return tipoPagamento; }
-    public void setTipoPagamento(TipoPagamento tipoPagamento) { this.tipoPagamento = tipoPagamento; }
-    public StatusPagamento getStatusPagamento() { return statusPagamento; }
-    public void setStatusPagamento(StatusPagamento statusPagamento) { this.statusPagamento = statusPagamento; }
-    public Boolean getTaxiDog() { return taxiDog; }
-    public void setTaxiDog(Boolean taxiDog) { this.taxiDog = taxiDog; }
-    public HorarioTaxiDog getHorarioTaxiDog() { return horarioTaxiDog; }
-    public void setHorarioTaxiDog(HorarioTaxiDog horarioTaxiDog) { this.horarioTaxiDog = horarioTaxiDog; }
-    public Boolean getPacote() { return pacote; }
-    public void setPacote(Boolean pacote) { this.pacote = pacote; }
-    public StatusServico getStatusServico() { return statusServico; }
-    public void setStatusServico(StatusServico statusServico) { this.statusServico = statusServico; }
-    public String getObservacoes() { return observacoes; }
-    public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
-    public DataAgendamento getDataAgendamento() { return dataAgendamento; }
-    public void setDataAgendamento(DataAgendamento dataAgendamento) { this.dataAgendamento = dataAgendamento; }
-    public Cliente getCliente() { return cliente; }
-    public void setCliente(Cliente cliente) { this.cliente = cliente; }
-    public Pet getPet() { return pet; }
-    public void setPet(Pet pet) { this.pet = pet; }
-    public Usuario getUsuario() { return usuario; }
-    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
-    public LocalDateTime getDataCadastro() { return dataCadastro; }
-    public void setDataCadastro(LocalDateTime dataCadastro) { this.dataCadastro = dataCadastro; }
-    public LocalDateTime getDataAtualizacao() { return dataAtualizacao; }
-    public void setDataAtualizacao(LocalDateTime dataAtualizacao) { this.dataAtualizacao = dataAtualizacao; }
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public TipoServico getTipoServico() {
+        return tipoServico;
+    }
+
+    public void setTipoServico(TipoServico tipoServico) {
+        this.tipoServico = tipoServico;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public TipoPagamento getTipoPagamento() {
+        return tipoPagamento;
+    }
+
+    public void setTipoPagamento(TipoPagamento tipoPagamento) {
+        this.tipoPagamento = tipoPagamento;
+    }
+
+    public StatusPagamento getStatusPagamento() {
+        return statusPagamento;
+    }
+
+    public void setStatusPagamento(StatusPagamento statusPagamento) {
+        this.statusPagamento = statusPagamento;
+    }
+
+    public Boolean getTaxiDog() {
+        return taxiDog;
+    }
+
+    public void setTaxiDog(Boolean taxiDog) {
+        this.taxiDog = taxiDog;
+    }
+
+    public HorarioTaxiDog getHorarioTaxiDog() {
+        return horarioTaxiDog;
+    }
+
+    public void setHorarioTaxiDog(HorarioTaxiDog horarioTaxiDog) {
+        this.horarioTaxiDog = horarioTaxiDog;
+    }
+
+    public Boolean getPacote() {
+        return pacote;
+    }
+
+    public void setPacote(Boolean pacote) {
+        this.pacote = pacote;
+    }
+
+    public StatusServico getStatusServico() {
+        return statusServico;
+    }
+
+    public void setStatusServico(StatusServico statusServico) {
+        this.statusServico = statusServico;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
+    public DataAgendamento getDataAgendamento() {
+        return dataAgendamento;
+    }
+
+    public void setDataAgendamento(DataAgendamento dataAgendamento) {
+        this.dataAgendamento = dataAgendamento;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
 
     @Override
     public String toString() {

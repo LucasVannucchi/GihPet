@@ -76,7 +76,6 @@ create table tb_pet (
 create table tb_agendamento (
     id uuid not null primary key,
     data_hora timestamp not null,
-    tipo_servico varchar(50) not null,
     status_agendamento varchar(50) not null,
     observacoes varchar(255),
     id_pet uuid not null,

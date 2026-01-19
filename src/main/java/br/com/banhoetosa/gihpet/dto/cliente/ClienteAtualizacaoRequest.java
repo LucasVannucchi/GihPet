@@ -30,8 +30,6 @@ public record ClienteAtualizacaoRequest(
         String telefone,
 
         @Email(message = "E-mail fora do padrão!")
-        String email,
-
-        StatusCliente statusCliente
+        String email
 ) {
 }

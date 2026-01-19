@@ -1,6 +1,7 @@
 package br.com.banhoetosa.gihpet.dto.cliente;
 
 import br.com.banhoetosa.gihpet.dto.endereco.EnderecoResponse;
+import br.com.banhoetosa.gihpet.dto.pet.PetResponse;
 import br.com.banhoetosa.gihpet.enums.StatusCliente;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -24,5 +25,6 @@ public record ClienteResponse(
         LocalDateTime dataCadastro,
         @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
         LocalDateTime dataAtualizacao,
-        List<EnderecoResponse> enderecos
+        List<EnderecoResponse> enderecos,
+        List<PetResponse> pets
 ) {}

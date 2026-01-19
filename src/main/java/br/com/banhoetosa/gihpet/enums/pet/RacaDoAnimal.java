@@ -21,4 +21,8 @@ public enum RacaDoAnimal {
     SAMOIEDA,
     BOXER,
     DALMATA;
+
+    public static RacaDoAnimal getRacaPadrao(){
+        return SHIH_TZU;
+    }
 }

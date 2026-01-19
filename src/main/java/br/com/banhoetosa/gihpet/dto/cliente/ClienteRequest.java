@@ -1,9 +1,11 @@
 package br.com.banhoetosa.gihpet.dto.cliente;
 
 import br.com.banhoetosa.gihpet.dto.endereco.EnderecoRequest;
+import br.com.banhoetosa.gihpet.dto.pet.PetRequest;
 import br.com.banhoetosa.gihpet.enums.StatusCliente;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import org.aspectj.bridge.IMessage;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
@@ -44,5 +46,9 @@ public record ClienteRequest(
 
         @NotEmpty(message = "É necessário informar ao menos um endereço!")
         @Valid
-        List<EnderecoRequest> enderecos
+        List<EnderecoRequest> enderecos,
+
+        @NotEmpty(message = "É necessário informar ao menos um Pet!")
+        @Valid
+        List<PetRequest> pets
 ) {}

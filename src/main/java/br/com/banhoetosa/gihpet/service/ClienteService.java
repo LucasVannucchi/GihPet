@@ -2,10 +2,12 @@ package br.com.banhoetosa.gihpet.service;
 
 import br.com.banhoetosa.gihpet.entity.Cliente;
 import br.com.banhoetosa.gihpet.entity.Endereco;
+import br.com.banhoetosa.gihpet.entity.Pet;
 import br.com.banhoetosa.gihpet.entity.Usuario;
 import br.com.banhoetosa.gihpet.enums.StatusCliente;
 import br.com.banhoetosa.gihpet.repository.ClienteRepository;
 import br.com.banhoetosa.gihpet.repository.EnderecoRepository;
+import br.com.banhoetosa.gihpet.repository.PetRepository;
 import br.com.banhoetosa.gihpet.security.SecurityService;
 import br.com.banhoetosa.gihpet.validator.ClienteValidator;
 import org.springframework.data.domain.Page;
@@ -25,21 +27,26 @@ public class ClienteService {
 
     private final ClienteRepository clienteRepository;
     private final EnderecoRepository enderecoRepository;
+    private final PetRepository petRepository;
     private final ClienteValidator clienteValidator;
     private final SecurityService securityService;
 
     public ClienteService(
             ClienteRepository clienteRepository,
-            EnderecoRepository enderecoRepository,
+            EnderecoRepository enderecoRepository, PetRepository petRepository,
             ClienteValidator clienteValidator,
             SecurityService securityService
     ) {
         this.clienteRepository = clienteRepository;
         this.enderecoRepository = enderecoRepository;
+        this.petRepository = petRepository;
         this.clienteValidator = clienteValidator;
         this.securityService = securityService;
     }
 
+    /**
+     * END-POINT para salvar cliente
+     */
     @Transactional
     public Cliente salvar(Cliente cliente) {
         clienteValidator.validarNovoCliente(cliente);
@@ -54,13 +61,27 @@ public class ClienteService {
                 enderecoRepository.save(endereco);
             }
         }
+
+        if (cliente.getPets() != null && !cliente.getPets().isEmpty()){
+            for (Pet pet : cliente.getPets()){
+                pet.setCliente(clienteSalvo);
+                petRepository.save(pet);
+            }
+        }
         return clienteSalvo;
     }
 
+    /**
+     * END-POINT para buscar cliente via ID
+     */
     public Optional<Cliente> buscarPorId(UUID id){
         return clienteRepository.findById(id);
     }
 
+    /**
+     * END-POINT para buscar cliente em geral!
+     * Podendo buscar com filtro.
+     */
     public Page<Cliente> buscar(
             String nome,
             String logradouro,
@@ -92,6 +113,9 @@ public class ClienteService {
         return clienteRepository.findAll(specs, pageRequest);
     }
 
+    /**
+     * END-POINT para atualizar informações do cliente
+     */
     @Transactional
     public Cliente atualizarCliente(Cliente cliente) {
         if (cliente.getId() == null) {
@@ -111,8 +135,6 @@ public class ClienteService {
             clienteExistente.setTelefone(cliente.getTelefone());
         if (cliente.getEmail() != null)
             clienteExistente.setEmail(cliente.getEmail());
-        if (cliente.getStatusCliente() != null)
-            clienteExistente.setStatusCliente(cliente.getStatusCliente());
         if (cliente.getDataNascimento() != null)
             clienteExistente.setDataNascimento(cliente.getDataNascimento());
 
@@ -121,8 +143,24 @@ public class ClienteService {
         return clienteRepository.save(clienteExistente);
     }
 
+    /**
+     * END-POINT para reativar cliente
+     */
     @Transactional
-    public void deletarCliente(UUID id) {
+    public void reativarCliente(UUID id){
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado!"));
+
+        cliente.setStatusCliente(StatusCliente.ATIVO);
+
+        clienteRepository.save(cliente);
+    }
+
+    /**
+     * END-POINT para desativar cliente
+     */
+    @Transactional
+    public void desativarCliente(UUID id) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado!"));
 
@@ -131,6 +169,9 @@ public class ClienteService {
         clienteRepository.save(cliente);
     }
 
+    /**
+     * END-POINT para remover endereço do cliente
+     */
     @Transactional
     public void removerEnderecoDoCliente(UUID idCliente, UUID idEndereco) {
         Cliente cliente = clienteRepository.findById(idCliente)

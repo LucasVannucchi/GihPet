@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/api/clientes")
-@Tag(name = "Clientes")
+@Tag(name = "Clientes", description = "Gerenciamento de Cliente")
 public class ClienteController implements GenericController {
 
     private final ClienteService clienteService;
@@ -89,7 +89,7 @@ public class ClienteController implements GenericController {
         return ResponseEntity.ok(resultado);
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("{id}/atualizar")
     @Operation(summary = "Atualizar cliente")
     public ResponseEntity<ClienteResponse> atualizarCliente(
             @PathVariable("id") String id,
@@ -111,9 +111,9 @@ public class ClienteController implements GenericController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("{id}")
-    @Operation(summary = "Excluir cliente")
-    public  ResponseEntity<Void> excluirCliente(@PathVariable("id") String id){
+    @PatchMapping("{id}/reativar")
+    @Operation(summary = "Reativar cliente")
+    public ResponseEntity<Void> reativarCliente(@PathVariable("id") String id){
         var idCliente = UUID.fromString(id);
         Optional<Cliente> clienteOptional = clienteService.buscarPorId(idCliente);
 
@@ -121,7 +121,21 @@ public class ClienteController implements GenericController {
             return ResponseEntity.notFound().build();
         }
 
-        clienteService.deletarCliente(idCliente);
+        clienteService.reativarCliente(idCliente);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("{id}/desativar")
+    @Operation(summary = "Desativar cliente")
+    public  ResponseEntity<Void> desativarCliente(@PathVariable("id") String id){
+        var idCliente = UUID.fromString(id);
+        Optional<Cliente> clienteOptional = clienteService.buscarPorId(idCliente);
+
+        if (clienteOptional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        clienteService.desativarCliente(idCliente);
         return ResponseEntity.noContent().build();
     }
 

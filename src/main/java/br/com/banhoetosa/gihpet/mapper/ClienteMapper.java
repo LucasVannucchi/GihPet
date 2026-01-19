@@ -3,10 +3,11 @@ package br.com.banhoetosa.gihpet.mapper;
 import br.com.banhoetosa.gihpet.dto.cliente.ClienteAtualizacaoRequest;
 import br.com.banhoetosa.gihpet.dto.cliente.ClienteRequest;
 import br.com.banhoetosa.gihpet.dto.cliente.ClienteResponse;
-import br.com.banhoetosa.gihpet.dto.endereco.EnderecoRequest;
 import br.com.banhoetosa.gihpet.dto.endereco.EnderecoResponse;
+import br.com.banhoetosa.gihpet.dto.pet.PetResponse;
 import br.com.banhoetosa.gihpet.entity.Cliente;
 import br.com.banhoetosa.gihpet.entity.Endereco;
+import br.com.banhoetosa.gihpet.entity.Pet;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,9 +17,11 @@ import java.util.stream.Collectors;
 public class ClienteMapper {
 
     private final EnderecoMapper enderecoMapper;
+    private final PetMapper petMapper;
 
-    public ClienteMapper(EnderecoMapper enderecoMapper) {
+    public ClienteMapper(EnderecoMapper enderecoMapper, PetMapper petMapper) {
         this.enderecoMapper = enderecoMapper;
+        this.petMapper = petMapper;
     }
 
     public Cliente toEntity(ClienteRequest dto) {
@@ -41,6 +44,12 @@ public class ClienteMapper {
                 .collect(Collectors.toList());
         cliente.setEnderecos(enderecos);
 
+        List<Pet> pets = dto.pets()
+                .stream()
+                .map(petMapper::toEntity)
+                .collect(Collectors.toList());
+        cliente.setPets(pets);
+
         return cliente;
     }
 
@@ -53,7 +62,6 @@ public class ClienteMapper {
         cliente.setNacionalidade(dto.nacionalidade());
         cliente.setTelefone(dto.telefone());
         cliente.setEmail(dto.email());
-        cliente.setStatusCliente(dto.statusCliente());
         return cliente;
     }
 
@@ -68,6 +76,11 @@ public class ClienteMapper {
                 .map(enderecoMapper::toDTO)
                 .collect(Collectors.toList());
 
+        List<PetResponse> pets = cliente.getPets()
+                .stream()
+                .map(petMapper::toDTO)
+                .collect(Collectors.toList());
+
         return new ClienteResponse(
                 cliente.getId(),
                 cliente.getNome(),
@@ -80,7 +93,8 @@ public class ClienteMapper {
                 cliente.getStatusCliente(),
                 cliente.getDataCadastro(),
                 cliente.getDataAtualizacao(),
-                enderecos
+                enderecos,
+                pets
         );
     }
 }

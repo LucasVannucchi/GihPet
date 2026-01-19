@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/api/enderecos")
-@Tag(name = "Endereco")
+@Tag(name = "Endereco", description = "Gerenciamento de Endereço")
 public class EnderecoController {
 
     private final EnderecoService enderecoService;
