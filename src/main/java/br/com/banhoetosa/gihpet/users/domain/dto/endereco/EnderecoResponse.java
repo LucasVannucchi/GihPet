@@ -1,0 +1,14 @@
+package br.com.banhoetosa.gihpet.users.domain.dto.endereco;
+
+import java.util.UUID;
+
+public record EnderecoResponse(
+        UUID id,
+        String logradouro,
+        String numero,
+        String complemento,
+        String bairro,
+        String cidade,
+        String estado,
+        String cep
+) {}

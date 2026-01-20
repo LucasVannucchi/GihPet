@@ -1,11 +1,11 @@
 package br.com.banhoetosa.gihpet.common;
 
-import br.com.banhoetosa.gihpet.dto.erro.ErroCampo;
-import br.com.banhoetosa.gihpet.dto.erro.ErroResposta;
-import br.com.banhoetosa.gihpet.exceptions.CampoInvalidoException;
-import br.com.banhoetosa.gihpet.exceptions.OperacaoNaoPermitidaException;
-import br.com.banhoetosa.gihpet.exceptions.PermissaoInvalidaException;
-import br.com.banhoetosa.gihpet.exceptions.RegistroDuplicadoException;
+import br.com.banhoetosa.gihpet.common.dto.erro.ErroCampo;
+import br.com.banhoetosa.gihpet.common.dto.erro.ErroResposta;
+import br.com.banhoetosa.gihpet.common.exceptions.CampoInvalidoException;
+import br.com.banhoetosa.gihpet.common.exceptions.OperacaoNaoPermitidaException;
+import br.com.banhoetosa.gihpet.common.exceptions.PermissaoInvalidaException;
+import br.com.banhoetosa.gihpet.common.exceptions.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
