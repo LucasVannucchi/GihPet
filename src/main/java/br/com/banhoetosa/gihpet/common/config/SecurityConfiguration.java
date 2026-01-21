@@ -1,7 +1,7 @@
 package br.com.banhoetosa.gihpet.common.config;
 
 import br.com.banhoetosa.gihpet.common.security.CustomUserDetailsService;
-import br.com.banhoetosa.gihpet.users.domain.service.UsuarioService;
+import br.com.banhoetosa.gihpet.usuarios.domain.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

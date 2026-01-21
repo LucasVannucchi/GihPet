@@ -1,10 +1,10 @@
 package br.com.banhoetosa.gihpet.pets.domain.mapper;
 
-import br.com.banhoetosa.gihpet.services.domain.mapper.ServicoMapper;
+import br.com.banhoetosa.gihpet.servicos.domain.mapper.ServicoMapper;
 import br.com.banhoetosa.gihpet.pets.domain.dto.pet.PetAtualizacaoRequest;
 import br.com.banhoetosa.gihpet.pets.domain.dto.pet.PetRequest;
 import br.com.banhoetosa.gihpet.pets.domain.dto.pet.PetResponse;
-import br.com.banhoetosa.gihpet.services.domain.dto.servico.ServicoResponse;
+import br.com.banhoetosa.gihpet.servicos.domain.dto.servico.ServicoResponse;
 import br.com.banhoetosa.gihpet.pets.domain.entity.Pet;
 import org.springframework.stereotype.Component;
 

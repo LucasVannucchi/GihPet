@@ -1,12 +1,12 @@
 package br.com.banhoetosa.gihpet.pets.domain.entity;
 
-import br.com.banhoetosa.gihpet.services.domain.entity.DataAgendamento;
-import br.com.banhoetosa.gihpet.services.domain.entity.Servico;
+import br.com.banhoetosa.gihpet.servicos.domain.entity.DataAgendamento;
+import br.com.banhoetosa.gihpet.servicos.domain.entity.Servico;
 import br.com.banhoetosa.gihpet.pets.domain.enums.pet.PorteAnimal;
 import br.com.banhoetosa.gihpet.pets.domain.enums.pet.RacaDoAnimal;
 import br.com.banhoetosa.gihpet.pets.domain.enums.pet.TipoAnimal;
-import br.com.banhoetosa.gihpet.users.domain.models.Cliente;
-import br.com.banhoetosa.gihpet.users.domain.models.Usuario;
+import br.com.banhoetosa.gihpet.usuarios.domain.models.Cliente;
+import br.com.banhoetosa.gihpet.usuarios.domain.models.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;

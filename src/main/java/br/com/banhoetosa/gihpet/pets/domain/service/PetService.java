@@ -1,9 +1,9 @@
 package br.com.banhoetosa.gihpet.pets.domain.service;
 
-import br.com.banhoetosa.gihpet.users.domain.models.Cliente;
+import br.com.banhoetosa.gihpet.usuarios.domain.models.Cliente;
 import br.com.banhoetosa.gihpet.pets.domain.entity.Pet;
-import br.com.banhoetosa.gihpet.users.domain.models.Usuario;
-import br.com.banhoetosa.gihpet.users.repository.ClienteRepository;
+import br.com.banhoetosa.gihpet.usuarios.domain.models.Usuario;
+import br.com.banhoetosa.gihpet.usuarios.repository.ClienteRepository;
 import br.com.banhoetosa.gihpet.pets.repository.PetRepository;
 import br.com.banhoetosa.gihpet.common.security.SecurityService;
 import br.com.banhoetosa.gihpet.pets.domain.validator.PetValidator;

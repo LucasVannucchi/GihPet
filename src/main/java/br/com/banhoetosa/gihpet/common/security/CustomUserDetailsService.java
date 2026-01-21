@@ -1,7 +1,7 @@
 package br.com.banhoetosa.gihpet.common.security;
 
-import br.com.banhoetosa.gihpet.users.domain.models.Usuario;
-import br.com.banhoetosa.gihpet.users.domain.service.UsuarioService;
+import br.com.banhoetosa.gihpet.usuarios.domain.models.Usuario;
+import br.com.banhoetosa.gihpet.usuarios.domain.service.UsuarioService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
